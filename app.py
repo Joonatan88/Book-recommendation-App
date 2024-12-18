@@ -14,9 +14,15 @@ def home():
     return render_template('index.html')
 
 @app.route('/recommend', methods=['POST'])
-def recommend():
+def recommend_keywords():
     #handle book recommendations
-    return "hello"
+    keywords = request.form.get('keywords', '')
+
+    if not keywords.strip():
+        return render_template('index.html', error="Please enter some keywords.")
+    
+    recommendations = recommend_books(keywords, tfidf_matrix, vectorizer, processed_df, number=5)
+    return render_template('recommendations.html', books=recommendations[['Title', 'Authors', 'Description']])
 
 
 if __name__ == "__main__":
