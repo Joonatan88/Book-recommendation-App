@@ -43,26 +43,3 @@ def books_on_authors(df, author_name):
     result = df[df['Authors'].str.contains(author_name, case=False, na=False)]
     return result
 
-
-if __name__ == "__main__":
-    
-    df = pd.read_csv(r"C:\Users\okononen\Documents\Skhewl\PersonalProjects\KirjojaKansalle\data\BooksDataset.csv")
-
-    cleaned_df = clean_data(df)
-
-    tfidf_matrix, vectorizer, processed_df = train_rec_model(cleaned_df)
-
-    user_keywords = "funny comedy laughing"
-    user_keywords = user_keywords.lower().strip()
-
-    # Get recommendations
-    recommendations = recommend_books(user_keywords, tfidf_matrix, vectorizer, processed_df, number = 5)
-
-    # Display results
-    print(recommendations[['Title', 'Authors', 'Description']])
-
-    print()
-    print()
-    author_name = "Wilde"
-    author_books = books_on_authors(df, author_name)
-    print(author_books[['Title', 'Authors', 'Description']])
