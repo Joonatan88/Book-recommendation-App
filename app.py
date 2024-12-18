@@ -24,6 +24,16 @@ def recommend_keywords():
     recommendations = recommend_books(keywords, tfidf_matrix, vectorizer, processed_df, number=5)
     return render_template('recommendations.html', books=recommendations[['Title', 'Authors', 'Description']])
 
+@app.route('/author', methods=['POST'])
+def recommend_author():
+    #handle searching for books from authors
+    author_name = request.form.get('author_name')
+
+    if not author_name.strip():
+        return render_template('index.html', error="Please enter some authors name.")
+
+    recommendations = books_on_authors(cleaned_df, author_name)
+    return render_template('recommendations.html', books=recommendations[['Title', 'Authors', 'Description']])
 
 if __name__ == "__main__":
     app.run(debug=True)
