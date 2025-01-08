@@ -26,7 +26,6 @@ Backend:
 
 Frontend:
 - HTML/CSS: User interface and design
-- JavaScript: Enables dynamic interactions like fetching recommendations without page reloads
 
 Dataset:
 https://www.kaggle.com/datasets/saurabhbagchi/books-dataset?resource=download
