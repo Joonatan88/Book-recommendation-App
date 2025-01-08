@@ -1,20 +1,26 @@
 import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.neighbors import NearestNeighbors
 from sklearn.metrics.pairwise import cosine_similarity
 
 #Clean dataset
 def clean_data(df):
+    try:
+        print("Data cleaning...")
 
-    print("Data cleaning...")
+        if 'Description' not in df.columns:
+            raise KeyError("The dataframe does not have a 'Description' column.")
 
-    cleaned_df = df.dropna(subset=['Description'])  #Drop na values
-    cleaned_df = cleaned_df[cleaned_df['Description'].str.strip() != ''] #Drop rows with no content on column "description"
-    cleaned_df['Description'] = cleaned_df['Description'].str.lower() #Turn to lowercase
+        cleaned_df = df.dropna(subset=['Description'])  # Drop NA values
+        cleaned_df = cleaned_df[cleaned_df['Description'].str.strip() != '']  # Drop rows with no content in 'Description'
+        cleaned_df['Description'] = cleaned_df['Description'].str.lower()  # Convert to lowercase
 
-    return cleaned_df
-
+        return cleaned_df
+   
+    except Exception as e:
+        print(f"Error during data cleaning: {e}")
+        return pd.DataFrame() 
+    
 #Train the model
 def train_rec_model(df, description_col = 'Description'):
 
